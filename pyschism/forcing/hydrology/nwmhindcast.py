@@ -364,14 +364,22 @@ class AWSHindcastInventory:
             aggregated_features = []
             for source_feats in features:
                 aggregated_features.extend(list(source_feats))
-            in_file = np.where(
-                np.in1d(nc_feature_id, aggregated_features,
-                        assume_unique=True))[0]
+            #in_file = np.where(
+            #    np.in1d(nc_feature_id, aggregated_features,
+            #            assume_unique=True))[0]
+            #in_file_2 = []
+
+            in_file=[]
+            for feature in aggregated_features:
+                idx=np.where(nc_feature_id == int(feature))[0]
+                in_file.append(idx.item())
+
             in_file_2 = []
             sidx = 0
             for source_feats in features:
                 eidx = sidx + len(source_feats)
-                in_file_2.append(in_file[sidx:eidx].tolist())
+                #in_file_2.append(in_file[sidx:eidx].tolist())
+                in_file_2.append(in_file[sidx:eidx])
                 sidx = eidx
             return in_file_2
 
